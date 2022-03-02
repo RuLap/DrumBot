@@ -22,7 +22,7 @@ namespace DrumBot.Commands
         public override async Task ExecuteAsync(Update update)
         {
             var user = _userService.GetOrCreate(update).Result;
-            var message = "Введите номер страницы и номер рисунка через пробел, например: 1 15.";
+            var message = "Введите номер страницы (нумерация с 5 в прикрепленном pdf) и номер рисунка через пробел, например: 1 15.";
             
             var inlineKeyboard = new ReplyKeyboardRemove();
 
