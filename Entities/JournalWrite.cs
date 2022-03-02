@@ -9,5 +9,7 @@ namespace DrumBot.Entities
         public int MinutesSpent { get; set; }
 
         public DrumTask DrumTask { get; set; }
+
+        public User User { get; set; }
     }
 }
