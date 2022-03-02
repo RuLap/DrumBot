@@ -11,5 +11,14 @@ namespace DrumBot
         }
         
         public DbSet<User> Users { get; set; }
+        public DbSet<JournalWrite> JournalWrites { get; set; }
+        public DbSet<DrumTask> DrumTasks { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<JournalWrite>()
+                .HasOne(p => p.DrumTask)
+                .WithMany(p => p.JournalWrites);
+        }
     }
 }

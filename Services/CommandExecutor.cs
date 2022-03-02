@@ -29,6 +29,7 @@ namespace DrumBot.Services
                 switch (update.Message?.Text)
                 {
                     case "Начать заниматься":
+                    case "Добавить новую запись":
                         await ExecuteCommand(CommandNames.AddJournalWriteCommand, update);
                         return;
                     case "Скачать книгу":
@@ -37,38 +38,29 @@ namespace DrumBot.Services
                 }
             }
 
-            if (update.Type == UpdateType.CallbackQuery)
-            {
-                if (update.CallbackQuery.Data.Contains("download"))
-                {
-                    await ExecuteCommand(CommandNames.DownloadBookCommand, update);
-                    return;
-                }
-            }
-            
             if (update.Message != null && update.Message.Text.Contains(CommandNames.StartCommand))
             {
                 await ExecuteCommand(CommandNames.StartCommand, update);
                 return;
             }
-
-            // AddOperation => SelectCategory => FinishOperation
+            
+            // AddTempo -> AddTime
             switch (_lastCommand?.Name)
             {
-                case CommandNames.AddOperationCommand:
+                case CommandNames.AddJournalWriteCommand:
                 {
-                    await ExecuteCommand(CommandNames.SelectCategoryCommand, update);
-                    break;
+                    await ExecuteCommand(CommandNames.AddTempoCommand, update);
+                    return;
                 }
-                case CommandNames.SelectCategoryCommand:
+                case CommandNames.AddTempoCommand:
                 {
-                    await ExecuteCommand(CommandNames.FinishOperationCommand, update);
-                    break;
+                    await ExecuteCommand(CommandNames.AddTimeCommand, update);
+                    return;
                 }
-                case null:
+                case CommandNames.AddTimeCommand:
                 {
-                    await ExecuteCommand(CommandNames.StartCommand, update);
-                    break;
+                    await ExecuteCommand(CommandNames.FinishInputCommand, update);
+                    return;
                 }
             }
         }

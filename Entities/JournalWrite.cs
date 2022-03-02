@@ -7,6 +7,8 @@ namespace DrumBot.Entities
         public int MaxBpm { get; set; }
         
         public int MinutesSpent { get; set; }
+        
+        public bool IsFinished { get; set; }
 
         public DrumTask DrumTask { get; set; }
 

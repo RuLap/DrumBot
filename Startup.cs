@@ -31,11 +31,15 @@ namespace DrumBot
             });
             services.AddSingleton<TelegramBot>();
             services.AddSingleton<BaseCommand, StartCommand>();
+            services.AddSingleton<BaseCommand, AddJournalWriteCommand>();
             services.AddSingleton<BaseCommand, DownloadBookCommand>();
-            services.AddSingleton<BaseCommand, SelectPageCommand>();
+            services.AddSingleton<BaseCommand, AddTempoCommand>();
+            services.AddSingleton<BaseCommand, AddTimeCommand>();
+            services.AddSingleton<BaseCommand, FinishInputCommand>();
             services.AddSingleton<ICommandExecutor, CommandExecutor>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IJournalService, JournalService>();
+            services.AddSingleton<IDrumTaskService, DrumTaskService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

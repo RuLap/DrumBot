@@ -9,7 +9,6 @@ namespace DrumBot.Commands
     public class DownloadBookCommand : BaseCommand
     {
         public override string Name { get; }
-        private readonly IUserService _userService;
 
         public DownloadBookCommand(IUserService userService, TelegramBot telegramBot)
         {

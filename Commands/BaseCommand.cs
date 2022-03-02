@@ -8,6 +8,7 @@ namespace DrumBot.Commands
     public abstract class BaseCommand
     {
         protected TelegramBotClient _botClient;
+        protected IUserService _userService;
         
         public abstract string Name { get; }
         

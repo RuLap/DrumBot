@@ -19,6 +19,61 @@ namespace DrumBot.Migrations
                 .HasAnnotation("ProductVersion", "6.0.0-preview.1.21102.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DrumBot.Entities.DrumTask", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Page")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TaskNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DrumTasks");
+                });
+
+            modelBuilder.Entity("DrumBot.Entities.JournalWrite", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DrumTaskId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxBpm")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinutesSpent")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DrumTaskId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("JournalWrites");
+                });
+
             modelBuilder.Entity("DrumBot.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -44,6 +99,26 @@ namespace DrumBot.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DrumBot.Entities.JournalWrite", b =>
+                {
+                    b.HasOne("DrumBot.Entities.DrumTask", "DrumTask")
+                        .WithMany("JournalWrites")
+                        .HasForeignKey("DrumTaskId");
+
+                    b.HasOne("DrumBot.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("DrumTask");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DrumBot.Entities.DrumTask", b =>
+                {
+                    b.Navigation("JournalWrites");
                 });
 #pragma warning restore 612, 618
         }
